@@ -157,13 +157,28 @@ validation_data = open("validation_data.pkl","rb")
 validation_data = pickle.load(validation_data)
 
 
+population = generate_population(size=5)
+generations = 25
+i = 1
+while True:
+    print(f"🧬 GENERATION {i}")
+    if i == generations:
+        break
+    i += 1
+    population = make_next_generation(population)
+    print()
+
+best_individual, fitness = sort_population_by_fitness(population)
+print("\n🔬 FINAL RESULT")
+print(best_individual[-1])
+print(fitness[-1])
+
 
 save_gen = open("gen_selection.pkl","rb")
 save_gen = pickle.load(save_gen)
 
 save_score = open("gen_score.pkl","rb")
 save_score = pickle.load(save_score)
-
 
 
 for i in range (len(save_gen)):
