@@ -141,66 +141,73 @@ def make_next_generation(previous_population):
 
 
 
+# # if you need to read
+# training_data = open("training_data.pkl","rb")
+# training_data = pickle.load(training_data)
+# training_labels = open("training_labels.pkl","rb")
+# training_labels = pickle.load(training_labels)
+
+# prediction_data = open("prediction_data.pkl","rb")
+# prediction_data = pickle.load(prediction_data)
+# prediction_labels = open("prediction_labels.pkl","rb")
+# prediction_labels = pickle.load(prediction_labels)
+
+# validation_data = open("validation_data.pkl","rb")
+# validation_data = pickle.load(validation_data)
+# validation_labels = open("validation_labels.pkl","rb")
+# validation_labels = pickle.load(validation_labels)
+
+
+
+# save_gen = open("gen_selection.pkl","rb")
+# save_gen = pickle.load(save_gen)
+
+# save_score = open("gen_score.pkl","rb")
+# save_score = pickle.load(save_score)
+
+
+# acc_avg = open('acc_avg.pkl','rb')
+# acc_avg = pickle.load(acc_avg)
+
+
+
+
 # if you need to read
-training_data = open("training_data.pkl","rb")
+training_data = open("training_data1.pkl","rb")
 training_data = pickle.load(training_data)
-training_labels = open("training_labels.pkl","rb")
+training_labels = open("training_labels1.pkl","rb")
 training_labels = pickle.load(training_labels)
 
-prediction_data = open("prediction_data.pkl","rb")
+prediction_data = open("prediction_data1.pkl","rb")
 prediction_data = pickle.load(prediction_data)
-prediction_labels = open("prediction_labels.pkl","rb")
+prediction_labels = open("prediction_labels1.pkl","rb")
 prediction_labels = pickle.load(prediction_labels)
 
-validation_data = open("validation_data.pkl","rb")
+validation_data = open("validation_data1.pkl","rb")
 validation_data = pickle.load(validation_data)
-validation_labels = open("validation_labels.pkl","rb")
+validation_labels = open("validation_labels1.pkl","rb")
 validation_labels = pickle.load(validation_labels)
 
 
-# save_gen = []
-# save_score = []
 
-# population = generate_population(size=10)
-# generations = 50
-# i = 1
-# while True:
-#     # print(f"🧬 GENERATION {i}")
-#     if i == generations:
-#         break
-#     i += 1
-#     population = make_next_generation(population)
-#     # print()
-
-# best_individual, fitness = sort_population_by_fitness(population)
-# print("\n🔬 FINAL RESULT")
-# print(best_individual[-1])
-# print(fitness[-1])
-
-
-# with open('gen_selection.pkl','wb') as f:
-#     pickle.dump(save_gen, f)
-
-# with open('gen_score.pkl','wb') as f:
-#     pickle.dump(save_score, f)
-
-# print("---Save the result into a pickle file---")
-
-save_gen = open("gen_selection.pkl","rb")
+save_gen = open("gen_selection1.pkl","rb")
 save_gen = pickle.load(save_gen)
 
-save_score = open("gen_score.pkl","rb")
+save_score = open("gen_score1.pkl","rb")
 save_score = pickle.load(save_score)
 
 
-for i in range (len(save_gen)):
-    print(sum(save_gen[i]))
-for i in range (len(save_gen)):
-    print(save_score[i])
+acc_avg = open('acc_avg1.pkl','rb')
+acc_avg = pickle.load(acc_avg)
 
-index = save_score.index(max(save_score))
+
+
+
+index = acc_avg.index(max(acc_avg))
+index = 80
 fitness_value = save_score[index]
 print("Best",fitness_value, " ", index)
+print(save_gen[index])
 select = save_gen[index]
 C = 100
 train = selection_function(select,training_data)

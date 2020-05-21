@@ -126,6 +126,16 @@ def make_next_generation(previous_population):
     sorted_by_fitness_population, fitness = sort_population_by_fitness(previous_population)
     population_size = len(previous_population)
     print(sum(fitness)/len(fitness))
+    acc_avg.append(sum(fitness)/len(fitness))
+    acc_up.append(fitness[-1]-(sum(fitness)/len(fitness)))
+    acc_low.append((sum(fitness)/len(fitness))-fitness[0])
+    temp = []
+    for i in range(population_size):
+    	temp.append(sum(sorted_by_fitness_population[i]))
+    num_avg.append(sum(temp)/len(temp))
+    num_up.append(max(temp)-(sum(temp)/len(temp)))
+    num_low.append((sum(temp)/len(temp))-min(temp))
+
     # print("fitness score:")
     # for i in range (population_size):
     # 	print(fitness[i])
@@ -141,28 +151,53 @@ def make_next_generation(previous_population):
 
 
 
-# if you need to read
-training_data = open("training_data.pkl","rb")
+# # if you need to read for 7 class
+# training_data = open("training_data.pkl","rb")
+# training_data = pickle.load(training_data)
+# training_labels = open("training_labels.pkl","rb")
+# training_labels = pickle.load(training_labels)
+
+# prediction_data = open("prediction_data.pkl","rb")
+# prediction_data = pickle.load(prediction_data)
+# prediction_labels = open("prediction_labels.pkl","rb")
+# prediction_labels = pickle.load(prediction_labels)
+
+# validation_data = open("validation_data.pkl","rb")
+# validation_data = pickle.load(validation_data)
+# validation_labels = open("validation_labels.pkl","rb")
+# validation_labels = pickle.load(validation_labels)
+
+# if you need to read for 6 class
+training_data = open("training_data1.pkl","rb")
 training_data = pickle.load(training_data)
-training_labels = open("training_labels.pkl","rb")
+training_labels = open("training_labels1.pkl","rb")
 training_labels = pickle.load(training_labels)
 
-prediction_data = open("prediction_data.pkl","rb")
+prediction_data = open("prediction_data1.pkl","rb")
 prediction_data = pickle.load(prediction_data)
-prediction_labels = open("prediction_labels.pkl","rb")
+prediction_labels = open("prediction_labels1.pkl","rb")
 prediction_labels = pickle.load(prediction_labels)
 
-validation_data = open("validation_data.pkl","rb")
+validation_data = open("validation_data1.pkl","rb")
 validation_data = pickle.load(validation_data)
-validation_labels = open("validation_labels.pkl","rb")
+validation_labels = open("validation_labels1.pkl","rb")
 validation_labels = pickle.load(validation_labels)
+
 
 
 save_gen = []
 save_score = []
 
+acc_avg = []
+acc_up = []
+acc_low = []
+
+num_avg = []
+num_up = []
+num_low = []
+
 population = generate_population(size=10)
-generations = 50
+generations = 100
 i = 1
 while True:
     # print(f"🧬 GENERATION {i}")
@@ -178,35 +213,53 @@ print(best_individual[-1])
 print(fitness[-1])
 
 
-with open('gen_selection.pkl','wb') as f:
+# with open('gen_selection.pkl','wb') as f:
+#     pickle.dump(save_gen, f)
+
+# with open('gen_score.pkl','wb') as f:
+#     pickle.dump(save_score, f)
+
+# with open('acc_avg.pkl','wb') as f:
+#     pickle.dump(acc_avg, f)
+# with open('acc_up.pkl','wb') as f:
+#     pickle.dump(acc_up, f)
+# with open('acc_low.pkl','wb') as f:
+#     pickle.dump(acc_low, f)
+
+
+# with open('num_avg.pkl','wb') as f:
+#     pickle.dump(num_avg, f)
+# with open('num_up.pkl','wb') as f:
+#     pickle.dump(num_up, f)
+# with open('num_low.pkl','wb') as f:
+#     pickle.dump(num_low, f)
+
+# print("---Save the result into a pickle file---")
+
+
+
+
+# save files for 6-class
+with open('gen_selection1.pkl','wb') as f:
     pickle.dump(save_gen, f)
 
-with open('gen_score.pkl','wb') as f:
+with open('gen_score1.pkl','wb') as f:
     pickle.dump(save_score, f)
 
-print("---Save the result into a pickle file---")
-
-# save_gen = open("gen_selection.pkl","rb")
-# save_gen = pickle.load(save_gen)
-
-# save_score = open("gen_score.pkl","rb")
-# save_score = pickle.load(save_score)
-
-
-# for i in range (len(save_gen)):
-#     select = save_gen[i]
-#     C = 100
-#     train = selection_function(select,training_data)
-#     test = selection_function(select,prediction_data)
-
-#     clf = SVC(C = C, kernel='linear', probability=True, tol=1e-3)
-
-#     clf.fit(train, training_labels)
-#     pred_lin = clf.score(test, prediction_labels)
-#     print (pred_lin)
+with open('acc_avg1.pkl','wb') as f:
+    pickle.dump(acc_avg, f)
+with open('acc_up1.pkl','wb') as f:
+    pickle.dump(acc_up, f)
+with open('acc_low1.pkl','wb') as f:
+    pickle.dump(acc_low, f)
 
 
-
+with open('num_avg1.pkl','wb') as f:
+    pickle.dump(num_avg, f)
+with open('num_up1.pkl','wb') as f:
+    pickle.dump(num_up, f)
+with open('num_low1.pkl','wb') as f:
+    pickle.dump(num_low, f)
 
 
 
