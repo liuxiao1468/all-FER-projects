@@ -149,7 +149,7 @@ def crossover(individual_a, individual_b):
 def mutate(individual):
 	draw1 = random.uniform(0, 1)
 	draw2 = random.uniform(0, 1)
-	if draw1>0.95:
+	if draw1>0.97:
 		p = random.choice([-1,1])
 		if (individual[-2]+p > 0) and (individual[-2]+p < 7):
 			individual[-2] = individual[-2]+p
@@ -171,7 +171,7 @@ def make_next_generation(previous_population):
     next_generation = []
     sorted_by_fitness_population, fitness = sort_population_by_fitness(previous_population)
     population_size = len(previous_population)
-    print(sum(fitness)/len(fitness))
+    print(sum(fitness)/len(fitness), " ", cc[sorted_by_fitness_population[-1][-2]])
     acc_avg.append(sum(fitness)/len(fitness))
     acc_up.append(fitness[-1]-(sum(fitness)/len(fitness)))
     acc_low.append((sum(fitness)/len(fitness))-fitness[0])
@@ -197,7 +197,7 @@ def make_next_generation(previous_population):
 
 
 
-# # if you need to read for 7 class
+# # if you need to read for 7 class ck+
 # training_data = open("training_data.pkl","rb")
 # training_data = pickle.load(training_data)
 # training_labels = open("training_labels.pkl","rb")
@@ -213,30 +213,37 @@ def make_next_generation(previous_population):
 # validation_labels = open("validation_labels.pkl","rb")
 # validation_labels = pickle.load(validation_labels)
 
-# if you need to read for 6 class
-training_data = open("training_data1.pkl","rb")
+# # if you need to read for 8 class ck+
+# training_data = open("training_data1.pkl","rb")
+# training_data = pickle.load(training_data)
+# training_labels = open("training_labels1.pkl","rb")
+# training_labels = pickle.load(training_labels)
+
+# prediction_data = open("prediction_data1.pkl","rb")
+# prediction_data = pickle.load(prediction_data)
+# prediction_labels = open("prediction_labels1.pkl","rb")
+# prediction_labels = pickle.load(prediction_labels)
+
+# validation_data = open("validation_data1.pkl","rb")
+# validation_data = pickle.load(validation_data)
+# validation_labels = open("validation_labels1.pkl","rb")
+# validation_labels = pickle.load(validation_labels)
+
+# if you need to read for 7 class MUG
+training_data = open("training_data3.pkl","rb")
 training_data = pickle.load(training_data)
-training_labels = open("training_labels1.pkl","rb")
+training_labels = open("training_labels3.pkl","rb")
 training_labels = pickle.load(training_labels)
 
-prediction_data = open("prediction_data1.pkl","rb")
+prediction_data = open("prediction_data3.pkl","rb")
 prediction_data = pickle.load(prediction_data)
-prediction_labels = open("prediction_labels1.pkl","rb")
+prediction_labels = open("prediction_labels3.pkl","rb")
 prediction_labels = pickle.load(prediction_labels)
 
-validation_data = open("validation_data1.pkl","rb")
+validation_data = open("validation_data3.pkl","rb")
 validation_data = pickle.load(validation_data)
-validation_labels = open("validation_labels1.pkl","rb")
+validation_labels = open("validation_labels3.pkl","rb")
 validation_labels = pickle.load(validation_labels)
-
-
-
-# a = training_data*0.25
-# print(a.shape)
-# AU_matrix = a[:,list(range(0, 228))]
-# VL_matrix = a[:,list(range(228, 364))]
-# train = np.column_stack([AU_matrix,VL_matrix])
-# print("train",train.shape)
 
 
 
@@ -252,7 +259,7 @@ num_up = []
 num_low = []
 
 population = generate_population(size=10)
-generations = 200
+generations = 300
 i = 1
 while True:
     # print(f"🧬 GENERATION {i}")
@@ -268,6 +275,7 @@ print(best_individual[-1])
 print(fitness[-1])
 
 
+# # # save files for 7-class ck+
 # with open('gen_selection.pkl','wb') as f:
 #     pickle.dump(save_gen, f)
 
@@ -294,25 +302,49 @@ print(fitness[-1])
 
 
 
-# save files for 8-class
-with open('gen_selection1.pkl','wb') as f:
+# # save files for 8-class ck+
+# with open('gen_selection1.pkl','wb') as f:
+#     pickle.dump(save_gen, f)
+
+# with open('gen_score1.pkl','wb') as f:
+#     pickle.dump(save_score, f)
+
+# with open('acc_avg1.pkl','wb') as f:
+#     pickle.dump(acc_avg, f)
+# with open('acc_up1.pkl','wb') as f:
+#     pickle.dump(acc_up, f)
+# with open('acc_low1.pkl','wb') as f:
+#     pickle.dump(acc_low, f)
+
+
+# with open('num_avg1.pkl','wb') as f:
+#     pickle.dump(num_avg, f)
+# with open('num_up1.pkl','wb') as f:
+#     pickle.dump(num_up, f)
+# with open('num_low1.pkl','wb') as f:
+#     pickle.dump(num_low, f)
+
+
+# # save files for 7-class MUG
+with open('gen_selection3.pkl','wb') as f:
     pickle.dump(save_gen, f)
 
-with open('gen_score1.pkl','wb') as f:
+with open('gen_score3.pkl','wb') as f:
     pickle.dump(save_score, f)
 
-with open('acc_avg1.pkl','wb') as f:
+with open('acc_avg3.pkl','wb') as f:
     pickle.dump(acc_avg, f)
-with open('acc_up1.pkl','wb') as f:
+with open('acc_up3.pkl','wb') as f:
     pickle.dump(acc_up, f)
-with open('acc_low1.pkl','wb') as f:
+with open('acc_low3.pkl','wb') as f:
     pickle.dump(acc_low, f)
 
 
-with open('num_avg1.pkl','wb') as f:
+with open('num_avg3.pkl','wb') as f:
     pickle.dump(num_avg, f)
-with open('num_up1.pkl','wb') as f:
+with open('num_up3.pkl','wb') as f:
     pickle.dump(num_up, f)
-with open('num_low1.pkl','wb') as f:
+with open('num_low3.pkl','wb') as f:
     pickle.dump(num_low, f)
 
+print("---Save the result into a pickle file---")

@@ -25,23 +25,10 @@ train_dataset = "/home/leo/Facial-expression-real-time/Facial-expression-real-ti
 # train_dataset = "/home/leo/Facial-expression-real-time/Facial-expression-real-time/MUG_dataset//%s//*" 
 
 
-def generate_population(size):
-
-    population = []
-    for i in range(size):
-        zero_count = random.randint(0, 68)
-        one_count = 68 - zero_count
-        individual = [0]*zero_count + [1]*one_count
-        random.shuffle(individual)
-        population.append(individual)
-
-    return population
-
-
-def selection_function(individual, training_data):
-	AU_matrix = training_data[:,list(range(0, 228))]
-	VL_matrix1 = training_data[:,list(range(228, 296))]
-	VL_matrix2 = training_data[:,list(range(296, 364))]
+def selection_function(individual, training_data,w1):
+	AU_matrix = training_data[:,list(range(0, 228))]*(1-w1)
+	VL_matrix1 = training_data[:,list(range(228, 296))]*w1
+	VL_matrix2 = training_data[:,list(range(296, 364))]*w1
 	index = [i for i in range(len(individual)) if individual[i] == 1]
 	for i in range (len(index)):
 		if index[i]<= 23:
@@ -66,82 +53,33 @@ def selection_function(individual, training_data):
 
 
 def apply_function(individual):
-	C = 100
-	train = selection_function(individual,training_data)
-	test = selection_function(individual,validation_data)
+	C = cc[individual[-2]]
+	w1 = ww1[individual[-1]]
+	individual = individual[:68]
+	train = selection_function(individual,training_data,w1)
+	test = selection_function(individual,prediction_data,w1)
 
 	clf = SVC(C = C, kernel='linear', probability=True, tol=1e-3)
 
 	clf.fit(train, training_labels)
-	pred_lin = clf.score(test, validation_labels)
+	pred_lin = clf.score(test, prediction_labels)
 	# print ("accuracy: ", pred_lin)
 	return pred_lin
 
-def sort_population_by_fitness(population):
-	fitness = []
-	for i in range (len(population)):
-		fitness_score = apply_function(population[i])
-		fitness.append(fitness_score)
-	population = [x for _,x in sorted(zip(fitness, population))]
-	fitness = sorted(fitness)
-	return population, fitness
+import matplotlib.cm as cmx
+from mpl_toolkits.mplot3d import Axes3D
+def scatter3d(x,y,z, cs, colorsMap='jet'):
+    cm = plt.get_cmap(colorsMap)
+    cNorm = matplotlib.colors.Normalize(vmin=min(cs), vmax=max(cs))
+    scalarMap = cmx.ScalarMappable(norm=cNorm, cmap=cm)
+    fig = plt.figure()
+    ax = Axes3D(fig)
+    ax.scatter(x, y, z, c=scalarMap.to_rgba(cs))
+    scalarMap.set_array(cs)
+    fig.colorbar(scalarMap)
+    plt.show()
 
-
-def choice_by_roulette(sorted_population, fitness):
-    offset = 0
-    normalized_fitness_sum = sum(fitness)
-
-    lowest_fitness = fitness[0]
-    draw = random.uniform(0, 1)
-
-    accumulated = 0
-    for i in range(len(sorted_population)):
-        probability = fitness[i] / normalized_fitness_sum
-        accumulated += probability
-
-        if draw <= accumulated:
-            return sorted_population[i]
-
-
-def crossover(individual_a, individual_b):
-	gen_1 = individual_a[int(len(individual_a)/2) :]
-	gen_2 = individual_b[: int(len(individual_b)/2)]
-
-	new_individual = gen_1 + gen_2
-	return new_individual
-
-
-def mutate(individual):
-	for i in range (3):
-		idx = random.randint(0, 67)
-		if individual[idx] == 1:
-			individual[idx] = 0
-		else:
-			individual[idx] = 1
-	return individual
-
-
-def make_next_generation(previous_population):
-    next_generation = []
-    sorted_by_fitness_population, fitness = sort_population_by_fitness(previous_population)
-    population_size = len(previous_population)
-    print(sum(fitness)/len(fitness))
-    # print("fitness score:")
-    # for i in range (population_size):
-    # 	print(fitness[i])
-    save_gen.append(sorted_by_fitness_population[-1])
-    save_score.append(fitness[-1])
-    for i in range(population_size):
-	    first_choice = choice_by_roulette(sorted_by_fitness_population, fitness)
-	    second_choice = choice_by_roulette(sorted_by_fitness_population, fitness)
-	    individual = crossover(first_choice, second_choice)
-	    individual = mutate(individual)
-	    next_generation.append(individual)
-    return next_generation
-
-
-
-# # if you need to read
+# # # if you need to read ck+ 7-class
 # training_data = open("training_data.pkl","rb")
 # training_data = pickle.load(training_data)
 # training_labels = open("training_labels.pkl","rb")
@@ -172,51 +110,80 @@ def make_next_generation(previous_population):
 
 
 
-# if you need to read
-training_data = open("training_data1.pkl","rb")
+# # if you need to read ck+ 8-class
+# training_data = open("training_data1.pkl","rb")
+# training_data = pickle.load(training_data)
+# training_labels = open("training_labels1.pkl","rb")
+# training_labels = pickle.load(training_labels)
+
+# prediction_data = open("prediction_data1.pkl","rb")
+# prediction_data = pickle.load(prediction_data)
+# prediction_labels = open("prediction_labels1.pkl","rb")
+# prediction_labels = pickle.load(prediction_labels)
+
+# validation_data = open("validation_data1.pkl","rb")
+# validation_data = pickle.load(validation_data)
+# validation_labels = open("validation_labels1.pkl","rb")
+# validation_labels = pickle.load(validation_labels)
+
+
+
+# save_gen = open("gen_selection1.pkl","rb")
+# save_gen = pickle.load(save_gen)
+
+# save_score = open("gen_score1.pkl","rb")
+# save_score = pickle.load(save_score)
+
+
+# acc_avg = open('acc_avg1.pkl','rb')
+# acc_avg = pickle.load(acc_avg)
+
+
+# # if you need to read MUG 7-class
+training_data = open("training_data3.pkl","rb")
 training_data = pickle.load(training_data)
-training_labels = open("training_labels1.pkl","rb")
+training_labels = open("training_labels3.pkl","rb")
 training_labels = pickle.load(training_labels)
 
-prediction_data = open("prediction_data1.pkl","rb")
+prediction_data = open("prediction_data3.pkl","rb")
 prediction_data = pickle.load(prediction_data)
-prediction_labels = open("prediction_labels1.pkl","rb")
+prediction_labels = open("prediction_labels3.pkl","rb")
 prediction_labels = pickle.load(prediction_labels)
 
-validation_data = open("validation_data1.pkl","rb")
+validation_data = open("validation_data3.pkl","rb")
 validation_data = pickle.load(validation_data)
-validation_labels = open("validation_labels1.pkl","rb")
+validation_labels = open("validation_labels3.pkl","rb")
 validation_labels = pickle.load(validation_labels)
 
 
 
-save_gen = open("gen_selection1.pkl","rb")
+save_gen = open("gen_selection3.pkl","rb")
 save_gen = pickle.load(save_gen)
 
-save_score = open("gen_score1.pkl","rb")
+save_score = open("gen_score3.pkl","rb")
 save_score = pickle.load(save_score)
 
 
-acc_avg = open('acc_avg1.pkl','rb')
+acc_avg = open('acc_avg3.pkl','rb')
 acc_avg = pickle.load(acc_avg)
 
 
 cc = [0.1, 1, 10, 100, 316, 1000, 3162, 10000]
 ww1 = np.arange(0, 1, 0.05)
 
-for i in range (len(save_gen)):
-	print(save_score[i], " ",cc[save_gen[i][-2]], " ", ww1[save_gen[i][-1]])
+# for i in range (len(save_gen)):
+# 	print(i, "", acc_avg[i], " ",cc[save_gen[i][-2]], " ", ww1[save_gen[i][-1]])
 
 
-# index = acc_avg.index(max(acc_avg))
-# index = 80
-# fitness_value = save_score[index]
-# print("Best",fitness_value, " ", index)
-# print(save_gen[index])
-# select = save_gen[index]
+index = acc_avg.index(max(acc_avg))
+# index = 295
+fitness_value = save_score[index]
+print("Best",fitness_value, " ", index)
+print(save_gen[index])
+select = save_gen[index]
 # C = 100
-# train = selection_function(select,training_data)
-# test = selection_function(select,prediction_data)
+pred_lin = apply_function(select)
+print("final result: ", pred_lin)
 
 # clf = SVC(C = C, kernel='linear', probability=True, tol=1e-3)
 
@@ -239,9 +206,35 @@ for i in range (len(save_gen)):
 #     pred_lin = clf.score(test, prediction_labels)
 #     print (pred_lin)
 
+plot_w1 = []
+plot_c = []
+plot_acc = []
+for i in range (len(save_gen)):
+	plot_w1.append(ww1[save_gen[i][-1]])
+	plot_c.append(cc[save_gen[i][-2]])
+	plot_acc.append(acc_avg[i])
+
+# Create Map
+cm = plt.get_cmap("RdYlGn")
+
+x = np.asarray(plot_w1)
+y = np.asarray(plot_c)
+z = np.asarray(plot_acc)
+col = np.arange(0.0033,0.99,0.0033)
 
 
 
+# 3D Plot
+fig = plt.figure()
+ax3D = fig.add_subplot(111, projection='3d')
+p3d = ax3D.scatter(x, y, z, s=30, c=col, marker='o')
+ax3D.set_title('Accuracy with varied Weights and C value')
+ax3D.set_xlabel('w1')
+ax3D.set_ylabel('C Value')
+ax3D.set_zlabel('Accuracy')   
+fig.colorbar(p3d, shrink=0.4, aspect=5)                                                                          
+
+plt.show()
 
 
 
