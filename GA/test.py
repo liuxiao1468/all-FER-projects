@@ -110,7 +110,7 @@ asymmetric_error6 = [lower_error6, upper_error6]
 
 #3a9b85  #ffb9ff
 
-plt.subplot(2, 1, 1)
+plt.figure(1)
 plt.grid(True)
 plt.errorbar(x, y1, yerr=asymmetric_error, color = '#ffff88',zorder=1)
 plt.plot(x, y1,'-',color = '#afaf76',label='7-class in CK+',zorder=3)
@@ -126,7 +126,8 @@ plt.ylabel("Validation Accuracy")
 plt.ylim(0.7,1.0)
 # plt.legend()
 plt.legend(loc='center left', bbox_to_anchor=(0.9, 0.1))
-plt.subplot(2, 1, 2)
+
+plt.figure(2)
 plt.grid(True)
 plt.errorbar(x, y2, yerr=asymmetric_error1,color = '#ffff88',zorder=1)
 plt.plot(x, y2,'-',color = '#afaf76',label='7-class in CK+',zorder=3)

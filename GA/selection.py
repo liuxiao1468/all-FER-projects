@@ -79,33 +79,33 @@ def scatter3d(x,y,z, cs, colorsMap='jet'):
     fig.colorbar(scalarMap)
     plt.show()
 
-# # # if you need to read ck+ 7-class
-# training_data = open("training_data.pkl","rb")
-# training_data = pickle.load(training_data)
-# training_labels = open("training_labels.pkl","rb")
-# training_labels = pickle.load(training_labels)
+# # if you need to read ck+ 7-class
+training_data = open("training_data.pkl","rb")
+training_data = pickle.load(training_data)
+training_labels = open("training_labels.pkl","rb")
+training_labels = pickle.load(training_labels)
 
-# prediction_data = open("prediction_data.pkl","rb")
-# prediction_data = pickle.load(prediction_data)
-# prediction_labels = open("prediction_labels.pkl","rb")
-# prediction_labels = pickle.load(prediction_labels)
+prediction_data = open("prediction_data.pkl","rb")
+prediction_data = pickle.load(prediction_data)
+prediction_labels = open("prediction_labels.pkl","rb")
+prediction_labels = pickle.load(prediction_labels)
 
-# validation_data = open("validation_data.pkl","rb")
-# validation_data = pickle.load(validation_data)
-# validation_labels = open("validation_labels.pkl","rb")
-# validation_labels = pickle.load(validation_labels)
-
-
-
-# save_gen = open("gen_selection.pkl","rb")
-# save_gen = pickle.load(save_gen)
-
-# save_score = open("gen_score.pkl","rb")
-# save_score = pickle.load(save_score)
+validation_data = open("validation_data.pkl","rb")
+validation_data = pickle.load(validation_data)
+validation_labels = open("validation_labels.pkl","rb")
+validation_labels = pickle.load(validation_labels)
 
 
-# acc_avg = open('acc_avg.pkl','rb')
-# acc_avg = pickle.load(acc_avg)
+
+save_gen = open("gen_selection.pkl","rb")
+save_gen = pickle.load(save_gen)
+
+save_score = open("gen_score.pkl","rb")
+save_score = pickle.load(save_score)
+
+
+acc_avg = open('acc_avg.pkl','rb')
+acc_avg = pickle.load(acc_avg)
 
 
 
@@ -139,33 +139,33 @@ def scatter3d(x,y,z, cs, colorsMap='jet'):
 # acc_avg = pickle.load(acc_avg)
 
 
-# # if you need to read MUG 7-class
-training_data = open("training_data3.pkl","rb")
-training_data = pickle.load(training_data)
-training_labels = open("training_labels3.pkl","rb")
-training_labels = pickle.load(training_labels)
+# # # if you need to read MUG 7-class
+# training_data = open("training_data3.pkl","rb")
+# training_data = pickle.load(training_data)
+# training_labels = open("training_labels3.pkl","rb")
+# training_labels = pickle.load(training_labels)
 
-prediction_data = open("prediction_data3.pkl","rb")
-prediction_data = pickle.load(prediction_data)
-prediction_labels = open("prediction_labels3.pkl","rb")
-prediction_labels = pickle.load(prediction_labels)
+# prediction_data = open("prediction_data3.pkl","rb")
+# prediction_data = pickle.load(prediction_data)
+# prediction_labels = open("prediction_labels3.pkl","rb")
+# prediction_labels = pickle.load(prediction_labels)
 
-validation_data = open("validation_data3.pkl","rb")
-validation_data = pickle.load(validation_data)
-validation_labels = open("validation_labels3.pkl","rb")
-validation_labels = pickle.load(validation_labels)
-
-
-
-save_gen = open("gen_selection3.pkl","rb")
-save_gen = pickle.load(save_gen)
-
-save_score = open("gen_score3.pkl","rb")
-save_score = pickle.load(save_score)
+# validation_data = open("validation_data3.pkl","rb")
+# validation_data = pickle.load(validation_data)
+# validation_labels = open("validation_labels3.pkl","rb")
+# validation_labels = pickle.load(validation_labels)
 
 
-acc_avg = open('acc_avg3.pkl','rb')
-acc_avg = pickle.load(acc_avg)
+
+# save_gen = open("gen_selection3.pkl","rb")
+# save_gen = pickle.load(save_gen)
+
+# save_score = open("gen_score3.pkl","rb")
+# save_score = pickle.load(save_score)
+
+
+# acc_avg = open('acc_avg3.pkl','rb')
+# acc_avg = pickle.load(acc_avg)
 
 
 cc = [0.1, 1, 10, 100, 316, 1000, 3162, 10000]
@@ -228,10 +228,10 @@ col = np.arange(0.0033,0.99,0.0033)
 fig = plt.figure()
 ax3D = fig.add_subplot(111, projection='3d')
 p3d = ax3D.scatter(x, y, z, s=30, c=col, marker='o')
-ax3D.set_title('Accuracy with varied Weights and C value')
-ax3D.set_xlabel('w1')
-ax3D.set_ylabel('C Value')
-ax3D.set_zlabel('Accuracy')   
+# ax3D.set_title('Accuracy with varied Weights and C value')
+# ax3D.set_xlabel('w1')
+# ax3D.set_ylabel('C Value')
+# ax3D.set_zlabel('Accuracy')   
 fig.colorbar(p3d, shrink=0.4, aspect=5)                                                                          
 
 plt.show()
